@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Products</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Sell Products</h1>
+    <form action="/sell" method="POST">
+        <div id="product-container">
+            <div class="product-entry">
+                <label>Product:</label>
+                <select name="product_id[]" required>
+                    <option value="" disabled selected>Select a product</option>
+                    {% for item in items %}
+                        <option value="{{ item.product_id }}">{{ item.product_name }} (ID: {{ item.product_id }})</option>
+                    {% endfor %}
+                </select><br>
+                <label>Quantity:</label>
+                <input type="number" name="quantity[]" placeholder="Enter Quantity" required><br>
+            </div>
+        </div>
+        <button type="button" id="add-product">Add Another Product</button><br><br>
+        <button type="submit">Sell</button>
+    </form>
+
+    {% if sales_result %}
+    <h2>Sales Summary</h2>
+    <ul>
+        {% for sale in sales_result %}
+            <li>{{ sale.product_name }} - Quantity: {{ sale.quantity }} - Total Price: ${{ sale.total_price }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <script>
+        document.getElementById('add-product').addEventListener('click', function() {
+            var productContainer = document.getElementById('product-container');
+            var newProductEntry = document.createElement('div');
+            newProductEntry.classList.add('product-entry');
+            newProductEntry.innerHTML = `
+                <label>Product:</label>
+                <select name="product_id[]" required>
+                    <option value="" disabled selected>Select a product</option>
+                    {% for item in items %}
+                        <option value="{{ item.product_id }}">{{ item.product_name }} (ID: {{ item.product_id }})</option>
+                    {% endfor %}
+                </select><br>
+                <label>Quantity:</label>
+                <input type="number" name="quantity[]" placeholder="Enter Quantity" required><br>
+            `;
+            productContainer.appendChild(newProductEntry);
+        });
+    </script>
+
+    <a href="{{ url_for('home') }}">
+        <button class="home-button">Home</button>
+    </a>
+</body>
+</html>

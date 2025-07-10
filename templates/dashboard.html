@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('/static/back.jpg'); /* Add your image here */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px;
+            margin: 0;
+            color: #fff;
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .dashboard-heading {
+            text-align: center;
+            font-size: 2.5em;
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        /* Box Styling */
+        .box {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+        }
+
+        .box h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .box p, .box ul {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        /* Hover Effect */
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Different colors for different boxes */
+        .sales-box {
+            background-color: #f5f5f5;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .profit-box {
+            background-color: #f9f9f9;
+            border-left: 5px solid #2196F3;
+        }
+
+        .most-sold-box {
+            background-color: #fefefe;
+            border-left: 5px solid #FF9800;
+        }
+
+        .low-stock-box {
+            background-color: #fff3e0;
+            border-left: 5px solid #FF5722;
+        }
+
+        .top-profit-box {
+            background-color: #e8f5e9;
+            border-left: 5px solid #8BC34A;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* List Styling */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .box {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .dashboard-heading {
+                font-size: 2em;
+            }
+        }
+
+        /* Home Button Styles */
+        .home-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 15px 30px;  /* Increased padding for larger button */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;  /* Slightly rounded corners */
+            cursor: pointer;
+            font-size: 18px;  /* Slightly larger font size */
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);  /* Soft shadow for better visibility */
+        }
+
+        .home-button:hover {
+            background-color: #45a049;  /* Slightly darker green */
+            transform: scale(1.1);  /* Slightly larger on hover */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);  /* Stronger shadow on hover */
+        }
+
+        .home-button:focus {
+            outline: none;
+            border: 2px solid #45a049;  /* Add border on focus */
+        }
+    </style>
+</head>
+<body>
+    <h1 class="dashboard-heading">Dashboard</h1>
+
+    <!-- Home Button -->
+    <a href="{{ url_for('home') }}">
+        <button class="home-button">Home</button>
+    </a>
+
+    <div class="dashboard-container">
+        <!-- Total Sales and Total Profit in a single row -->
+        <div class="box sales-box">
+            <h2>Total Sales of the Day</h2>
+            <p><strong>${{ total_sales }}</strong></p>
+        </div>
+        <div class="box profit-box">
+            <h2>Total Profit of the Day</h2>
+            <p><strong>${{ total_profit }}</strong></p>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Top 5 Most Sold Items and Low Stock Items in a single row -->
+        <div class="box most-sold-box">
+            <h2>Top 5 Most Sold Items</h2>
+            <ul>
+                {% for item in top_sold_items %}
+                    <li>{{ item.product_name }} - Sold: {{ item.total_quantity }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="box low-stock-box">
+            <h2>Low Stock Items</h2>
+            <ul>
+                {% for item in low_stock %}
+                    <li>{{ item.product_name }} - {{ item.quantity }} remaining</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Top 5 Profitable Products in a single row -->
+        <div class="box top-profit-box">
+            <h2>Top 5 Profitable Products</h2>
+            <ul>
+                {% for item in top_profit_products %}
+                    <li>{{ item[0] }} - Profit: ${{ item[1] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

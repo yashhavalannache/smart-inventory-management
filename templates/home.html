@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Smart Store Management</title>
+    <link rel="stylesheet" href="/static/homestyle.css"> <!-- Linking to external CSS -->
+
+    <style>
+        
+        .videos {
+            display: flex;
+            justify-content: center; /* Ensure videos are spaced evenly */
+            margin-top: 30px;
+            flex-wrap: wrap; /* Allows wrapping of videos on smaller screens */
+            gap: 30px; /* Adds space between the video containers */
+        }
+
+        .video-container {
+            background: #b7b5b5;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 45%; /* Each video container takes up about half the screen */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .video-container h2 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #333;
+            border: 2px solid #ddd; /* Adds a border around the title */
+            padding: 5px 10px;
+            display: inline-block; /* Makes sure the title box is only as wide as the text */
+            border-radius: 5px;
+        }
+
+        video {
+            width: 100%; /* Make the video fill the box */
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .videos {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .video-container {
+                width: 90%; /* For smaller screens, make the video containers take up more space */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to Smart Store Management</h1>
+            <nav>
+                <ul>
+                    <li><a href="/inventory">Inventory</a></li>
+                    <li><a href="/sales">Sales</a></li>
+                    <li><a href="{{ url_for('sell') }}">Sell Products</a>
+                    </li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/report">Report</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="intro">
+            <p>
+                Welcome to the Smart Store Management system! Our platform allows businesses to streamline their inventory, sales, and reporting processes effortlessly. With an intuitive interface and easy-to-use features, you can manage your store more efficiently than ever before.
+            </p>
+        </section>
+
+        <section class="videos">
+            <div class="video-container">
+                <h2>MANAGING INVENTORY</h2>
+                <video width="500" height="420" autoplay loop muted>
+                    <source src="{{ url_for('static', filename='inventory.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+    
+            <div class="video-container">
+                <h2>HOW TO SELL PRODUCTS</h2>
+                <video width="500" height="420" autoplay loop muted>
+                    <source src="{{ url_for('static', filename='sellitem.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+        
+
+        <section class="developers">
+            <h2>Meet Our Developers</h2>
+            <div class="developer">
+                <img src="/static/kbmini.jpg" alt="Developer 1">
+                <h3>KHUSHI BHUTE</h3>
+                <p>Email: khushibhute12@gmail.com</p>
+            </div>
+            <div class="developer">
+                <img src="/static/kdmini.jpg" alt="Developer 2">
+                <h3>KALASHRI DAIVADNYA</h3>
+                <p>Email: kalashridaivadnya10@gmail.com</p>
+            </div>
+            <div class="developer">
+                <img src="/static/yashmini.jpg" alt="Developer 3">
+                <h3>YASH HAVALANNACHE</h3>
+                <p>Email: yashhavalanache@gmail.com</p>
+            </div>
+            <div class="developer">
+                <img src="/static/shreemini.jpg" alt="Developer 4">
+                <h3>SHREERANG DESHPANDE</h3>
+                <p>Email: shreerangd18@gmail.com</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
