@@ -5,6 +5,8 @@ from datetime import datetime
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from io import BytesIO
+import sys
+print("🐍 Python version is:", sys.version)
 
 
 
